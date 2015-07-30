@@ -5,6 +5,7 @@ package bomb
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import gameControlEngine.GameObject;
+	import utils.HudTextField;
 	/**
 	 * ...
 	 * @author Ramses di Perna
@@ -17,8 +18,7 @@ package bomb
 		
 		private var _slotArt : Sprite = new Sprite();
 		
-		private var _textFormat : TextFormat = new TextFormat();
-		private var _textField : TextField = new TextField();
+		private var _textField : HudTextField = new HudTextField("-",18,0xffffff);
 		
 		private var _defuseInt : int = 0; // the int that is needed to complete the slot. if higher than 10 then it will generate 2 input slots in 1 slot. 
 		
@@ -31,34 +31,30 @@ package bomb
 			addChild(_slotArt);
 			addChild(_textField);
 			
+			_textField.setPerfectFitWidth(_slotArt.width);
+			_textField.setPerfectFitHeight(_slotArt.height);
+			
 			_defuseInt = Math.round(Math.random() * 9);
-			
-			_textFormat.align = TextFormatAlign.CENTER;
-			_textFormat.size = 18;
-			
-			_textField.defaultTextFormat = _textFormat;
-			_textField.text = "-";
-			_textField.textColor = 0xffffff;
-			_textField.width = _slotArt.width;
+			_textField.setTextAlign(TextFormatAlign.CENTER);
 		}
 		
 		public function resetSlot() : void {
-			_textField.text = "";
-			_textField.textColor = 0xffffff;
+			_textField.changeText("-");
+			_textField.changeColor(0xffffff);
 		}
 		
 		public function defuseCheck(givenInt : int) : void {
 			
-			_textField.text = givenInt.toString();
+			_textField.changeText(givenInt.toString());
 			if (givenInt > _defuseInt) {
 				trace("The number is lower than " + givenInt);
-				_textField.textColor = 0xff0000;
+				_textField.changeColor(0xff0000);
 			}else if (givenInt < _defuseInt) {
 				trace("The number is higher than " + givenInt);
-				_textField.textColor = 0x0000ff;
+				_textField.changeColor(0x0000ff);
 			}else {
 				trace("Slot defused!");
-				_textField.textColor = 0x00ff00;
+				_textField.changeColor(0x00ff00);
 				_slotDefused = true;
 			}
 		}

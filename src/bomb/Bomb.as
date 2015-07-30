@@ -106,7 +106,9 @@ package bomb
 				slot = new DefuseSlot();
 				_defuseSlots.push(slot);
 				addChild(slot);
-				slot.x = ((_slotHolderArt.width - slot.width) / (amount - 1) * i) + _slotHolderArt.x;
+				//slot.x = ((_slotHolderArt.width - slot.width) / (amount - 1) * i) + _slotHolderArt.x; // old position calculation
+				var wd : Number = _slotHolderArt.width;
+				slot.x = (wd - (wd / 2) + slot.width) - (((slot.width) * amount) / 2) + ((slot.width + 5) * i);
 				slot.y = _slotHolderArt.y + (_slotHolderArt.height - slot.height);
 			}
 		}
